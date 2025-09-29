@@ -9,12 +9,12 @@ A SvelteKit application for visualizing the West Bank and Gaza Strip displacemen
 
 :pray: .T
 
-## View 
-
+## View & Consider
+https://palestine-awareness.thomasthorstensson.com/
 
 ### Required CSV Data Files
 
-The parsed CSV file, `events_data_pse.csv`, will be regularly updated. Data source: [The Humanitarian Data Exchange](https://data.humdata.org/dataset/idmc-event-data-for-pse/resource/759900bf-d08a-4523-8e4a-157aa97e3d29)
+The parsed CSV file, `events_data_pse.csv`, will be regularly updated. 
 
 ## Features
 
@@ -36,4 +36,7 @@ npm install
 npm run dev
 ```
 
-The application will be available at `http://localhost:5173`
+## Data Source
+
+Data source: 
+- [The Humanitarian Data Exchange](https://data.humdata.org/dataset/idmc-event-data-for-pse/resource/759900bf-d08a-4523-8e4a-157aa97e3d29)
