@@ -1,4 +1,7 @@
 
+<img width="600" height="600" alt="Image" src="https://github.com/user-attachments/assets/f0ef76c9-6d61-48ab-b68d-4ea66d01dead" />
+<br />
+<br />
 
 # Palestine Awareness - Data Visualization Project
 
