@@ -395,8 +395,8 @@
 
   .legend {
     position: absolute;
-    bottom: 30px;
-    left: 30px;
+    bottom: 20px;
+    left: 20px;
     background: $accent3;
     padding: 1rem;
     border-radius: 8px;
@@ -482,6 +482,10 @@
     max-width: 300px;
     background: $accent3;
     border-radius: 8px;
+  }
+
+  :global(.mapboxgl-ctrl-logo) {
+    display: none !important;
   }
 
   :global(.popup-content h3) {
