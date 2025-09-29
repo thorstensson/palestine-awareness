@@ -9,6 +9,9 @@ A SvelteKit application for visualizing the West Bank and Gaza Strip displacemen
 
 :pray: .T
 
+## View 
+
+
 ### Required CSV Data Files
 
 The parsed CSV file, `events_data_pse.csv`, will be regularly updated. Data source: [The Humanitarian Data Exchange](https://data.humdata.org/dataset/idmc-event-data-for-pse/resource/759900bf-d08a-4523-8e4a-157aa97e3d29)
