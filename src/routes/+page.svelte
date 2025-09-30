@@ -227,7 +227,7 @@
   <!-- Header -->
   <header class="header">
     <div class="header__content">
-      <h1 class="header__title">West Bank Displacement Tracker 2025</h1>
+      <h1 class="header__title">Palestine: People Displacement 2025</h1>
       {#if !loading && summary}
         <div class="header__stats">
           <div class="stat">
@@ -333,7 +333,7 @@
   .stat {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     min-width: 120px;
   }
 
@@ -397,7 +397,7 @@
     position: absolute;
     bottom: 20px;
     left: 20px;
-    background: $accent3;
+    background: $primary;
     padding: 1rem;
     border-radius: 8px;
     backdrop-filter: blur(10px);
@@ -471,7 +471,7 @@
   }
 
   :global(.mapboxgl-popup-content) {
-    background: $accent3;
+    background: $primary;
     border-radius: 8px;
   }
 
@@ -480,7 +480,7 @@
     font-family: $sans-ui;
     font-weight: 300;
     max-width: 300px;
-    background: $accent3;
+    background: $primary;
     border-radius: 8px;
   }
 
@@ -518,10 +518,6 @@
 
     .header h1 {
       font-size: 1.5rem;
-    }
-
-    .stats {
-      gap: 1rem;
     }
 
     .stat {
