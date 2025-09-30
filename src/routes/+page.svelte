@@ -227,7 +227,7 @@
   <!-- Header -->
   <header class="header">
     <div class="header__content">
-      <h1 class="header__title">Palestine: People Displacement 2025</h1>
+      <h1 class="header__title">Palestine Displacement 2025</h1>
       {#if !loading && summary}
         <div class="header__stats">
           <div class="stat">
@@ -290,7 +290,7 @@
 </div>
 
 <style lang="scss">
-  @use '../styles/_variables.scss' as *;
+  @use '../styles/global.scss' as *;
   :global(body) {
     margin: 0;
     padding: 0;
@@ -395,14 +395,21 @@
 
   .legend {
     position: absolute;
-    bottom: 20px;
-    left: 20px;
+    bottom: 10px;
+    left: 10px;
     background: $primary;
     padding: 1rem;
     border-radius: 8px;
     backdrop-filter: blur(10px);
     z-index: 1000;
-    min-width: 200px;
+    min-width: auto;
+
+    @media (min-width: 768px) {
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      max-width: 300px;
+    }
   }
 
   .legend__title {
@@ -507,28 +514,33 @@
     font-weight: bold;
   }
 
-  :global(.popup-content .source-link:hover) {
-    text-decoration: underline;
+  .header {
+    padding: 1rem;
+
+    h1 {
+      font-size: clamped(18px, 28px, 380px, 1920px);
+    }
+
+    &__stats {
+      gap: 1rem;
+
+      @media (min-width: 768px) {
+        gap: 2rem;
+      }
+
+      .stat {
+        min-width: 100px;
+        &__number {
+          font-size: clamped(16px, 24px, 380px, 1920px);
+        }
+        &__label {
+          font-size: clamped(14px, 18px, 380px, 1920px);
+        }
+      }
+    }
   }
 
-  @media (max-width: 768px) {
-    .header {
-      padding: 1rem;
-    }
-
-    .header h1 {
-      font-size: 1.5rem;
-    }
-
-    .stat {
-      min-width: 100px;
-    }
-
-    .legend {
-      bottom: 10px;
-      left: 10px;
-      right: 10px;
-      min-width: auto;
-    }
+  :global(.popup-content .source-link:hover) {
+    text-decoration: underline;
   }
 </style>
