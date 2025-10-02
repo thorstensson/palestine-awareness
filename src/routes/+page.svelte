@@ -221,6 +221,7 @@
     name="description"
     content="Interactive map showing displacement events in Palestine during 2025"
   />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 </svelte:head>
 
 <div class="app">
@@ -308,8 +309,8 @@
   .header {
     background: $primary;
     padding: 1rem 2rem;
-
-    z-index: 1000;
+    z-index: 1002;
+    position: relative;
   }
 
   .header__content {
@@ -363,7 +364,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
-    z-index: 1000;
+    z-index: 1003;
     background: $accent3;
     padding: 2rem;
     border-radius: 8px;
@@ -400,8 +401,17 @@
     padding: 1rem;
     border-radius: 8px;
     backdrop-filter: blur(10px);
-    z-index: 1000;
+    z-index: 1002;
     min-width: auto;
+
+    @media (max-width: 767px) {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      border-radius: 8px 8px 0 0;
+      margin: 0;
+    }
 
     @media (min-width: 768px) {
       bottom: 20px;
@@ -483,6 +493,11 @@
   :global(.mapboxgl-popup-content) {
     background: $primary;
     border-radius: 8px;
+    z-index: 1001 !important;
+  }
+
+  :global(.mapboxgl-popup) {
+    z-index: 1001 !important;
   }
 
   :global(.popup-content) {
