@@ -227,24 +227,24 @@
   <!-- Header -->
   <header class="header">
     <div class="header__content">
-      <h1 class="header__title">Palestine Displacement 2025</h1>
+      <h1 class="header__title">Palestine: Displacement 2025</h1>
       {#if !loading && summary}
         <div class="header__stats">
           <div class="stat">
             <span class="stat__number"
               >{formatNumber(summary.total_displaced)}</span
             >
-            <span class="stat__label">Total Displaced</span>
+            <span class="stat__label">Displaced</span>
           </div>
           <div class="stat">
             <span class="stat__number">{summary.total_events}</span>
-            <span class="stat__label">Events Recorded</span>
+            <span class="stat__label">Events</span>
           </div>
           <div class="stat">
             <span class="stat__number"
               >{formatNumber(summary.gaza_displaced)}</span
             >
-            <span class="stat__label">Gaza Strip</span>
+            <span class="stat__label">Gaza</span>
           </div>
           <div class="stat">
             <span class="stat__number"
@@ -334,7 +334,6 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    min-width: 120px;
   }
 
   .stat__number {
@@ -475,6 +474,10 @@
     margin: 0.5rem 0 0 0;
     border-top: 1px solid #333;
     padding-top: 0.5rem;
+  }
+
+  :global(.header__stats > *) {
+    min-width: unset !important;
   }
 
   :global(.mapboxgl-popup-content) {
