@@ -292,18 +292,35 @@
 
 <style lang="scss">
   @use '../styles/global.scss' as *;
+  
+  :global(html) {
+    overscroll-behavior: none;
+    -webkit-overflow-scrolling: touch;
+    height: 100%;
+    overflow: hidden;
+  }
+
   :global(body) {
     margin: 0;
     padding: 0;
     font-family: $sans-ui;
     background: $primary;
     color: $primary;
+    overscroll-behavior: none;
+    -webkit-overflow-scrolling: touch;
+    height: 100%;
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
   }
 
   .app {
     height: 100vh;
     display: flex;
     flex-direction: column;
+    overscroll-behavior: none;
+    touch-action: pan-x pan-y;
+    -webkit-overflow-scrolling: touch;
   }
 
   .header {
@@ -351,11 +368,14 @@
   .map-container {
     flex: 1;
     position: relative;
+    overscroll-behavior: none;
   }
 
   .map {
     width: 100%;
     height: 100%;
+    overscroll-behavior: none;
+    touch-action: pan-x pan-y;
   }
 
   .loading {
