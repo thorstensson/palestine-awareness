@@ -36,7 +36,7 @@
   function initializeMap() {
     map = new mapboxgl.Map({
       container: mapContainer,
-      style: 'mapbox://styles/mapbox/dark-v11',
+      style: 'mapbox://styles/mapbox/light-v11',
       center: [34.4668, 31.5017], // Gaza center
       zoom: 8,
       pitch: 0,
@@ -66,7 +66,7 @@
           figure: event.figure,
           date: event.displacement_date,
           location: event.locations_name,
-          description: event.description,
+          popup_text: event.standard_popup_text,
           source_url: event.source_url,
           sources: event.sources,
         },
@@ -92,14 +92,14 @@
         'circle-color': [
           'step',
           ['get', 'point_count'],
-          '#ff6b6b',
+          '#4a7c7b',
           10,
-          '#ff5252',
+          '#1f4e4d',
           30,
-          '#d32f2f',
+          '#0a2625',
         ],
         'circle-radius': ['step', ['get', 'point_count'], 20, 10, 30, 30, 40],
-        'circle-opacity': 0.8,
+        'circle-opacity': 0.85,
         'circle-stroke-width': 0,
       },
     })
@@ -132,13 +132,13 @@
           ['linear'],
           ['get', 'figure'],
           0,
-          '#ffeb3b',
+          '#84a6a5',
           1000,
-          '#ff9800',
+          '#4a7c7b',
           10000,
-          '#f44336',
+          '#1f4e4d',
           50000,
-          '#b71c1c',
+          '#0a2625',
         ],
         'circle-radius': [
           'interpolate',
@@ -165,19 +165,19 @@
       const coordinates = e.features[0].geometry.coordinates.slice()
       const props = e.features[0].properties
 
+      const locationHeader = props.location
+        ? `<p class="popup-location">${props.location}</p>`
+        : ''
+
       const popup = new mapboxgl.Popup()
         .setLngLat(coordinates)
         .setHTML(
           `
-					<div class="popup-content">
-						<h3>${props.location}</h3>
-						<p><strong>${props.figure.toLocaleString()}</strong> people displaced</p>
-						<p><strong>Date:</strong> ${new Date(props.date).toLocaleDateString()}</p>
-						<p class="description">${props.description}</p>
-						<p><strong>Source:</strong> ${props.sources}</p>
-						${props.source_url ? `<a href="${props.source_url}" target="_blank" class="source-link">View Report</a>` : ''}
-					</div>
-				`
+          <div class="popup-content">
+            ${locationHeader}
+            <div class="popup-body">${props.popup_text}</div>
+          </div>
+        `
         )
         .addTo(map)
     })
@@ -219,42 +219,82 @@
   <title>Free Palestine &#x2022; Thorstensson</title>
   <meta
     name="description"
-    content="Interactive map showing displacement events in Palestine during 2025"
+    content="Interactive map showing displacement events in Palestine over the last 180 days"
   />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta property="og:title" content="Free Palestine — Displacement Map" />
+  <meta
+    property="og:description"
+    content="Interactive map showing displacement events in Palestine over the last 180 days"
+  />
+  <meta property="og:image" content="/og-image.png" />
+  <meta
+    property="og:url"
+    content="https://palestine-awareness.thomasthorstensson.com"
+  />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link
+    rel="canonical"
+    href="https://palestine-awareness.thomasthorstensson.com"
+  />
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Palestine Displacement Map",
+      "description": "Interactive map showing displacement events in Palestine from the IDMC API",
+      "applicationCategory": "DataVisualization",
+      "browserRequirements": "Requires JavaScript",
+      "url": "https://palestine-awareness.thomasthorstensson.com"
+    }
+  </script>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+  />
 </svelte:head>
 
 <div class="app">
   <!-- Header -->
   <header class="header">
     <div class="header__content">
-      <h1 class="header__title">Palestine: Displacement 2025</h1>
-      {#if !loading && summary}
-        <div class="header__stats">
-          <div class="stat">
-            <span class="stat__number"
-              >{formatNumber(summary.total_displaced)}</span
-            >
-            <span class="stat__label">Displaced</span>
+      <div class="header__left">
+        <h1 class="header__title">Palestine: Displacement — Last 180 Days</h1>
+        {#if !loading && summary}
+          <div class="header__stats">
+            <div class="stat">
+              <span class="stat__number"
+                >{formatNumber(summary.total_displaced)}</span
+              >
+              <span class="stat__label">Displaced</span>
+            </div>
+            <div class="stat">
+              <span class="stat__number">{summary.total_events}</span>
+              <span class="stat__label">Events</span>
+            </div>
+            <div class="stat">
+              <span class="stat__number"
+                >{formatNumber(summary.gaza_displaced)}</span
+              >
+              <span class="stat__label">Gaza</span>
+            </div>
+            <div class="stat">
+              <span class="stat__number"
+                >{formatNumber(summary.west_bank_displaced)}</span
+              >
+              <span class="stat__label">West Bank</span>
+            </div>
           </div>
-          <div class="stat">
-            <span class="stat__number">{summary.total_events}</span>
-            <span class="stat__label">Events</span>
-          </div>
-          <div class="stat">
-            <span class="stat__number"
-              >{formatNumber(summary.gaza_displaced)}</span
-            >
-            <span class="stat__label">Gaza</span>
-          </div>
-          <div class="stat">
-            <span class="stat__number"
-              >{formatNumber(summary.west_bank_displaced)}</span
-            >
-            <span class="stat__label">West Bank</span>
-          </div>
-        </div>
-      {/if}
+        {/if}
+      </div>
+      <p class="header__credit">
+        Thomas Thorstensson • <a
+          href="https://github.com/thorstensson/palestine-awareness"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="header__credit-link">GitHub</a
+        >
+      </p>
     </div>
   </header>
 
@@ -270,29 +310,38 @@
   </main>
 
   <!-- Legend -->
-  <div class="legend">
-    <h3 class="legend__title">Displacement Scale</h3>
-    <div class="legend__items">
-      <div class="legend__item">
-        <div class="legend__circle legend__circle--small"></div>
-        <span>1 - 1,000 people</span>
+  {#if !loading}
+    <div class="legend">
+      <h3 class="legend__title">Displacement Scale</h3>
+      <div class="legend__items">
+        <div class="legend__item">
+          <div class="legend__circle legend__circle--small"></div>
+          <span>1 - 1,000 people</span>
+        </div>
+        <div class="legend__item">
+          <div class="legend__circle legend__circle--medium"></div>
+          <span>1,000 - 10,000 people</span>
+        </div>
+        <div class="legend__item">
+          <div class="legend__circle legend__circle--large"></div>
+          <span>10,000+ people</span>
+        </div>
       </div>
-      <div class="legend__item">
-        <div class="legend__circle legend__circle--medium"></div>
-        <span>1,000 - 10,000 people</span>
-      </div>
-      <div class="legend__item">
-        <div class="legend__circle legend__circle--large"></div>
-        <span>10,000+ people</span>
-      </div>
+      <p class="legend__source">
+        Data: <a
+          href="https://helix-tools-api.idmcdb.org/external-api/#/operations-tag-IDU"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="legend__link">IDMC API</a
+        > — last 180 days
+      </p>
     </div>
-    <p class="legend__source">Data: UN OCHA; Zoom & Click info</p>
-  </div>
+  {/if}
 </div>
 
 <style lang="scss">
   @use '../styles/global.scss' as *;
-  
+
   :global(html) {
     overscroll-behavior: none;
     -webkit-overflow-scrolling: touch;
@@ -303,7 +352,8 @@
   :global(body) {
     margin: 0;
     padding: 0;
-    font-family: $sans-ui;
+    font-family: $sans-text;
+    font-weight: 400;
     background: $primary;
     color: $primary;
     overscroll-behavior: none;
@@ -331,14 +381,21 @@
   }
 
   .header__content {
-    max-width: 1200px;
-    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .header__left {
+    display: flex;
+    flex-direction: column;
   }
 
   .header__title {
     margin: 0 0 1rem 0;
     font-size: 1.5rem;
-    font-weight: 300;
+    font-weight: 400;
     color: $secondary;
   }
 
@@ -361,7 +418,7 @@
 
   .stat__label {
     font-size: 0.9rem;
-    color: #e3f2fd;
+    color: $secondary;
     margin-top: 0.25rem;
   }
 
@@ -383,25 +440,33 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
     z-index: 1003;
     background: $accent3;
-    padding: 2rem;
+    padding: 2.5rem 2rem;
     border-radius: 8px;
-    color: $accent2;
+    color: $secondary;
     font-family: $sans-text;
-    font-weight: 300;
-    font-size: 1rem;
+  }
+
+  .loading p {
+    font-size: clamped(10px, 13px, 380px, 1920px);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin: 0;
   }
 
   .loading-spinner {
     width: 60px;
     height: 60px;
-    border: 4px solid #333;
-    border-top: 4px solid $accent1;
+    border: 4px solid rgba($secondary, 0.15);
+    border-top: 4px solid $accent2;
     border-radius: 50%;
     animation: spin 1s linear infinite;
-    margin: 0 auto 1rem;
   }
 
   @keyframes spin {
@@ -443,9 +508,11 @@
 
   .legend__title {
     margin: 0 0 0.5rem 0;
-    font-size: 1rem;
-    color: #ffffff;
-    font-weight: 500;
+    font-size: clamped(10px, 13px, 380px, 1920px);
+    color: $secondary;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
   }
 
   .legend__items {
@@ -460,7 +527,9 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    font-size: 0.9rem;
+    font-size: clamped(8px, 10px, 380px, 1920px);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
   }
 
   .legend__circle {
@@ -483,27 +552,38 @@
   .legend__circle--small::before {
     width: 12px;
     height: 12px;
-    background: #ffeb3b;
+    background: #84a6a5;
   }
 
   .legend__circle--medium::before {
     width: 18px;
     height: 18px;
-    background: #ff9800;
+    background: #4a7c7b;
   }
 
   .legend__circle--large::before {
     width: 25px;
     height: 25px;
-    background: #f44336;
+    background: #1f4e4d;
   }
 
   .legend__source {
-    font-size: 0.8rem;
-    color: #bbb;
+    font-size: clamped(7px, 9px, 380px, 1920px);
+    color: $accent1;
     margin: 0.5rem 0 0 0;
     border-top: 1px solid #333;
     padding-top: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+  }
+
+  .legend__link {
+    color: $accent2;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 
   :global(.header__stats > *) {
@@ -522,8 +602,7 @@
 
   :global(.popup-content) {
     color: $secondary;
-    font-family: $sans-ui;
-    font-weight: 300;
+    font-family: $sans-text;
     max-width: 300px;
     background: $primary;
     border-radius: 8px;
@@ -533,15 +612,22 @@
     display: none !important;
   }
 
-  :global(.popup-content h3) {
-    margin: 0 0 0.5rem 0;
+  :global(.popup-location) {
+    margin: 0 0 0.75rem 0;
+    font-size: 1rem;
     color: $accent2;
+    border-bottom: 1px solid #333;
+    padding-bottom: 0.5rem;
   }
 
-  :global(.popup-content .description) {
-    font-size: 0.9rem;
-    line-height: 1.4;
-    margin: 0.5rem 0;
+  :global(.popup-body) {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: $secondary;
+  }
+
+  :global(.popup-body b) {
+    color: $accent2;
   }
 
   :global(.popup-content .source-link) {
@@ -549,14 +635,15 @@
     margin-top: 0.5rem;
     color: $accent2;
     text-decoration: none;
-    font-weight: bold;
   }
 
   .header {
     padding: 1rem;
 
     h1 {
-      font-size: clamped(18px, 28px, 380px, 1920px);
+      font-size: clamped(10px, 13px, 380px, 1920px);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
     }
 
     &__stats {
@@ -567,14 +654,38 @@
       }
 
       .stat {
-        min-width: 100px;
+        min-width: unset;
         &__number {
-          font-size: clamped(16px, 24px, 380px, 1920px);
+          font-size: clamped(11px, 14px, 380px, 1920px);
+          text-transform: uppercase;
+          letter-spacing: 0.08em;
         }
         &__label {
-          font-size: clamped(14px, 18px, 380px, 1920px);
+          font-size: clamped(8px, 10px, 380px, 1920px);
+          text-transform: uppercase;
+          letter-spacing: 0.14em;
+          color: $accent1;
         }
       }
+    }
+  }
+
+  .header__credit {
+    font-size: clamped(10px, 13px, 380px, 1920px);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: $accent1;
+    margin: 0 0 0 auto;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .header__credit-link {
+    color: $accent1;
+    text-decoration: none;
+
+    &:hover {
+      color: $secondary;
     }
   }
 

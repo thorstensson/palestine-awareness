@@ -1,31 +1,31 @@
-
 <img width="600" height="600" alt="Image" src="https://github.com/user-attachments/assets/f0ef76c9-6d61-48ab-b68d-4ea66d01dead" />
 <br />
 <br />
 
-# Palestine Awareness - Data Visualization Project
+# Palestine Awareness
 
-A SvelteKit application for visualizing the West Bank and Gaza Strip displacement events in 2025. In the shadow of the horrible atrocities taking place in Gaza, displacement is a daily reality for many Palestinians.
+A SvelteKit application for visualizing displacement events in Palestine. In the shadow of the atrocities taking place in Gaza, displacement is a daily reality for many Palestinians.
 
 :pray: .T
 
+**22 June 2026** &mdash; Updated to now pull data from the IDMC IDU API, which is updated by people in the field on a regular basis.
+
 ## View & Consider
+
 https://palestine-awareness.thomasthorstensson.com/
-
-### Required CSV Data Files
-
-The parsed CSV file, `events_data_pse.csv`, will be regularly updated. 
 
 ## Features
 
-- Interactive map visualization with geographic data
-- CSV data parsing with coordinate validation
+- Interactive Mapbox GL map with clustered displacement markers
+- Live data from the IDMC IDU API &mdash; updated regularly with the latest 180 days of events
+- Popup details with event descriptions, figures, and source attribution
+- Summary statistics (total displaced, Gaza vs West Bank breakdown)
 
 ## Tech Stack
 
 - SvelteKit
 - Mapbox GL JS
-- CSV parsing
+- IDMC Internal Displacement API
 
 ## Development
 
@@ -38,5 +38,4 @@ npm run dev
 
 ## Data Source
 
-Data source: 
-- [The Humanitarian Data Exchange](https://data.humdata.org/dataset/idmc-event-data-for-pse/resource/759900bf-d08a-4523-8e4a-157aa97e3d29)
+Displacement event data is fetched live from the [IDMC IDU API](https://helix-tools-api.idmcdb.org/external-api/#/operations-tag-IDU).
