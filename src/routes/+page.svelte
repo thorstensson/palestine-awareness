@@ -288,7 +288,7 @@
         {/if}
       </div>
       <p class="header__credit">
-        Thomas Thorstensson • <a
+        Thomas • <a
           href="https://github.com/thorstensson/palestine-awareness"
           target="_blank"
           rel="noopener noreferrer"
@@ -481,29 +481,13 @@
   .legend {
     position: absolute;
     bottom: 10px;
-    left: 10px;
+    left: 1rem;
     background: $primary;
     padding: 1rem;
     border-radius: 8px;
     backdrop-filter: blur(10px);
     z-index: 1002;
     min-width: auto;
-
-    @media (max-width: 767px) {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      border-radius: 8px 8px 0 0;
-      margin: 0;
-    }
-
-    @media (min-width: 768px) {
-      bottom: 20px;
-      left: 20px;
-      right: 20px;
-      max-width: 300px;
-    }
   }
 
   .legend__title {
@@ -621,13 +605,16 @@
   }
 
   :global(.popup-body) {
-    font-size: 0.85rem;
+    font-size: clamped(11px, 13px, 380px, 1920px);
     line-height: 1.5;
     color: $secondary;
   }
 
   :global(.popup-body b) {
+    font-size: clamped(13px, 15px, 380px, 1920px);
     color: $accent2;
+    font-family: $sans-text;
+    font-weight: 400;
   }
 
   :global(.popup-content .source-link) {
