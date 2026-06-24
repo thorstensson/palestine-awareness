@@ -287,14 +287,21 @@
           </div>
         {/if}
       </div>
-      <p class="header__credit">
-        Thomas • <a
-          href="https://github.com/thorstensson/palestine-awareness"
+      {#if !loading}
+        <a
+          href="https://www.thomasthorstensson.com"
           target="_blank"
           rel="noopener noreferrer"
-          class="header__credit-link">GitHub</a
+          class="header__credit"
         >
-      </p>
+          <img
+            src="/palestine-2.svg"
+            alt="by Thomas"
+            title="by Thomas"
+            class="header__flag"
+          />
+        </a>
+      {/if}
     </div>
   </header>
 
@@ -383,7 +390,7 @@
   .header__content {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     width: 100%;
   }
 
@@ -416,12 +423,6 @@
     color: $accent2;
   }
 
-  .stat__label {
-    font-size: 0.9rem;
-    color: $secondary;
-    margin-top: 0.25rem;
-  }
-
   .map-container {
     flex: 1;
     position: relative;
@@ -448,7 +449,7 @@
     z-index: 1003;
     background: $accent3;
     padding: 2.5rem 2rem;
-    border-radius: 8px;
+    border-radius: 0.5rem;
     color: $secondary;
     font-family: $sans-text;
   }
@@ -461,10 +462,10 @@
   }
 
   .loading-spinner {
-    width: 60px;
-    height: 60px;
-    border: 4px solid rgba($secondary, 0.15);
-    border-top: 4px solid $accent2;
+    width: 3.75rem;
+    height: 3.75rem;
+    border: 0.25rem solid rgba($secondary, 0.15);
+    border-top: 0.25rem solid $accent2;
     border-radius: 50%;
     animation: spin 1s linear infinite;
   }
@@ -480,11 +481,11 @@
 
   .legend {
     position: absolute;
-    bottom: 10px;
+    bottom: 0.625rem;
     left: 1rem;
     background: $primary;
     padding: 1rem;
-    border-radius: 8px;
+    border-radius: 0.5rem;
     backdrop-filter: blur(10px);
     z-index: 1002;
     min-width: auto;
@@ -519,8 +520,8 @@
   .legend__circle {
     border-radius: 50%;
     flex-shrink: 0;
-    width: 25px;
-    height: 25px;
+    width: 1.5625rem;
+    height: 1.5625rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -534,20 +535,20 @@
   }
 
   .legend__circle--small::before {
-    width: 12px;
-    height: 12px;
+    width: 0.75rem;
+    height: 0.75rem;
     background: #84a6a5;
   }
 
   .legend__circle--medium::before {
-    width: 18px;
-    height: 18px;
+    width: 1.125rem;
+    height: 1.125rem;
     background: #4a7c7b;
   }
 
   .legend__circle--large::before {
-    width: 25px;
-    height: 25px;
+    width: 1.5625rem;
+    height: 1.5625rem;
     background: #1f4e4d;
   }
 
@@ -576,7 +577,7 @@
 
   :global(.mapboxgl-popup-content) {
     background: $primary;
-    border-radius: 8px;
+    border-radius: 0.5rem;
     z-index: 1001 !important;
   }
 
@@ -587,9 +588,9 @@
   :global(.popup-content) {
     color: $secondary;
     font-family: $sans-text;
-    max-width: 300px;
+    max-width: 18.75rem;
     background: $primary;
-    border-radius: 8px;
+    border-radius: 0.5rem;
   }
 
   :global(.mapboxgl-ctrl-logo) {
@@ -651,28 +652,29 @@
           font-size: clamped(8px, 10px, 380px, 1920px);
           text-transform: uppercase;
           letter-spacing: 0.14em;
-          color: $accent1;
+          color: $accent2;
+          margin-top: 0.25rem;
         }
       }
     }
   }
 
   .header__credit {
-    font-size: clamped(10px, 13px, 380px, 1920px);
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: $accent1;
     margin: 0 0 0 auto;
-    white-space: nowrap;
     flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    line-height: 0;
   }
 
-  .header__credit-link {
-    color: $accent1;
-    text-decoration: none;
+  .header__flag {
+    width: 2.25rem;
+    height: auto;
+    display: block;
+    transition: opacity 0.2s ease;
 
     &:hover {
-      color: $secondary;
+      opacity: 0.65;
     }
   }
 
