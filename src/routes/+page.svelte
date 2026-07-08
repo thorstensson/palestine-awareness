@@ -36,7 +36,7 @@
   function initializeMap() {
     map = new mapboxgl.Map({
       container: mapContainer,
-      style: 'mapbox://styles/mapbox/light-v11',
+      style: 'mapbox://styles/mapbox/dark-v11',
       center: [34.4668, 31.5017], // Gaza center
       zoom: 8,
       pitch: 0,
